@@ -1,0 +1,6 @@
+name: RotationDataCollector
+version: '${project.version}'
+main: de.tjuli.rotationdatacollector.RotationDataCollector
+api-version: '1.20'
+depend:
+  - ProtocolLib
