@@ -12,10 +12,10 @@ public class RotationDataManager {
 
     private static final Map<Player, SampleList<RotationData>> rotationDataMap = new HashMap<>();
 
-    public static void addRotationData(Player player, float deltaX, float deltaY, float yaw, float pitch) {
+    public static void addRotationData(Player player, float yaw, float pitch) {
         if (rotationDataMap.get(player) != null) {
             SampleList<RotationData> rotationDataSampleList = rotationDataMap.get(player);
-            rotationDataSampleList.add(new RotationData(deltaX, deltaY, yaw, pitch));
+            rotationDataSampleList.add(new RotationData(yaw, pitch));
             if (rotationDataSampleList.isCollected()) {
                 saveRotationDataFile(player);
             }
@@ -31,19 +31,10 @@ public class RotationDataManager {
         if (rotationDataList == null) {
             return null;
         }
-        int notUseLessCounter = 0;
-        for (RotationData rotationData : rotationDataList) {
-           if(rotationData.getDeltaX() != 0f || rotationData.getDeltaY() != 0f) {
-               notUseLessCounter++;
-           }
-        }
-        if(notUseLessCounter * 1.5 < RotationDataCollector.SAVE_INTERVAL_PACKETS ) {
-            return null; //Filter useless data
-        }
 
         result.append("[");
         for (RotationData rotationData : rotationDataList) {
-            result.append("{").append(rotationData.getDeltaX()).append(", ").append(rotationData.getDeltaY()).append(", ").append(rotationData.getYawX()).append(", ").append(rotationData.getPitchY()).append("}, ");
+            result.append("{").append(rotationData.getYaw()).append(", ").append(rotationData.getPitch()).append("}, ");
         }
 
         result.append("]");
@@ -85,31 +76,19 @@ public class RotationDataManager {
     }
 
     public static class RotationData {
-        private final float deltaX;
-        private final float deltaY;
-        private final float yawX;
-        private final float pitchY;
+        private final float yaw;
+        private final float pitch;
 
-        public RotationData(float deltaX, float deltaY, float yawX, float pitchY) {
-            this.deltaX = clamp180(deltaX);
-            this.deltaY = deltaY;
-            this.yawX = yawX;
-            this.pitchY = pitchY; //only add pitch because yaw is useless for rotation checks
+        public RotationData(float yawX, float pitchY) {
+            this.yaw = clamp180(yawX);
+            this.pitch = pitchY;
+        }
+        public float getYaw() {
+            return yaw;
         }
 
-        public float getDeltaX() {
-            return deltaX;
-        }
-
-        public float getDeltaY() {
-            return deltaY;
-        }
-        public float getYawX() {
-            return yawX;
-        }
-
-        public float getPitchY() {
-            return pitchY;
+        public float getPitch() {
+            return pitch;
         }
 
 
