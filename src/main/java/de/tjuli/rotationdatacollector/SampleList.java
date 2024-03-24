@@ -1,3 +1,4 @@
+//https://github.com/NikV2/AnticheatBase/blob/master/src/main/java/me/nik/anticheatbase/utils/custom/SampleList.java
 package de.tjuli.rotationdatacollector;
 
 import java.util.LinkedList;
