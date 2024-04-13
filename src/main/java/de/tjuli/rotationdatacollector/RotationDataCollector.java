@@ -11,7 +11,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class RotationDataCollector extends JavaPlugin {
 
-    public static final int SAVE_INTERVAL_PACKETS = 300; //15 seconds
+    public static final int SAVE_INTERVAL_PACKETS = 256; //makes it easier to create a ml model on this
     public static RotationDataCollector INSTANCE;
 
     @Override
